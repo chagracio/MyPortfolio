@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<header>
+    <div class="container-fluid">
+        <div class="navb-logo">
+            <img src="{% static 'logo.png' %}" alt="logo">
+        </div>
+
+        <div class="nav-items d-none d-lg-flex">
+            <div class="item">
+                <a href="#about">About</a>
+            </div>
+            <div class="item">
+                <a href="#projects">Projects</a>
+            </div>
+            <div class="item">
+                <a href="#skills">Skills</a>
+            </div>
+            <div class="item">
+                <a href="#certificates">Certificates</a>
+            </div>
+            <div class="item">
+                <a href="#contact">Contact Me</a>
+            </div>
+        </div>
+
+        <!-- Button trigger modal -->
+        <div class="mobile-toggler d-lg-none">
+            <a href="#" data-bs-toggle = "modal" data-bs-target="#nav-modal"><i class="fa-solid fa-bars" ></i></a>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="nav-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <img src="{% static 'logo.png' %}" alt="logo">
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="modal-line">
+                            <a href="#">About</a>
+                        </div>
+                        <div class="modal-line">
+                            <a href="#">Projects</a>
+                        </div>
+                        <div class="modal-line">
+                            <a href="#">Skills</a>
+                        </div>
+                        <div class="modal-line">
+                            <a href="#">Certificates</a>
+                        </div>
+                        <div class="modal-line">
+                            <a href="#">Contact Me</a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-5 title">
+            <div class="first mt-5">
+                <p>Hello, my name is</p>
+            </div>
+            <div class="blinking second" id="blink">
+                <h1>{{info.name}}</h1>
+            </div>
+            <div class="third">
+                <h5>{{info.tag_line}}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="about">
+        <div class="col mt-5">
+            <div class="about mt-5">
+                <h1>About</h1>
+            </div>          
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-8">
+            <div class="card border-dark hidden">
+                <div class="card-body text-info">
+                    <p class="card-text">{{info.about}}
+                    </p>
+                </div>
+            </div> 
+        </div> 
+        <div class="col-4">
+            <div class="img hidden">
+                <img src="{{info.image.url}}" alt="Photo">
+            </div>
+        </div> 
+    </div>
+
+    <div class="row" id="certificates">
+        <div class="col mt-5">
+            <div class="about">
+                <h1>Certificates</h1>
+            </div>           
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="cert hidden">
+            <ul class="gallery">
+                {% for c in cert %}
+                <li><img src="{{c.cert.url}}" alt=""></li>
+                {% endfor %}
+            </ul>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row" id="certificates">
+    <div class="col mt-5">
+        <div class="about">
+            <h1>Contact Me</h1>
+        </div>           
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+    </div>
+</div> -->
+{% endblock content %}

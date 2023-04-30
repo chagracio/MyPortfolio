@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light navigation mb-5 px-3">
+        <div class="container-xxl">
+          <!-- navbar brand / title -->
+          <div class="logo">
+            <img src="{% static 'logo.png' %}" alt="logo" class="navbar-brand">
+            <!-- <span class="fw-bold logo3">Cha<span class="logo2">Gracio</span></span> -->
+          </div>
+          
+          <!-- toggle button for mobile nav -->
+          <button class="navbar-toggler collapsed d-flex d-lg-none flex-column justify-content-around" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="toggler-icon top-bar"></span>
+            <span class="toggler-icon middle-bar"></span>
+            <span class="toggler-icon bottom-bar"></span>
+          </button>
+    
+          <!-- navbar links -->
+          <div class="collapse navbar-collapse justify-content-end align-center " id="main-nav">
+            <ul class="navbar-nav">
+              <li class="nav-item list ">
+                <a class="nav-link " href="#home">Home</a>
+              </li>
+              <li class="nav-item list">
+                <a class="nav-link" href="#about">About</a>
+              </li>
+              <li class="nav-item list">
+                <a class="nav-link" href="#resume">Resume</a>
+              <li class="nav-item list">
+                <a class="nav-link" href="#projects">Projects</a>
+              </li>
+              <!-- <li class="nav-item list">
+                <a class="nav-link" href="#certificates">Certificates</a>
+              </li> -->
+              <li class="nav-item list">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+              {% if user.is_authenticated %}
+                <li class="nav-item list">
+                  <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+              {% else %}
+              {% endif %}
+              
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      {% for p in portfolio %}
+    <!-- first layout -->
+    <section id="home" class="home sec">
+        <div class="container-md">
+            <div class="row justify-content-start">
+                <div class="col-md-12 mt-5 ">
+                    <h5>Hello my name is,</h5>
+                    <h1 class="display-2 blink-text">{{p.name}}</h1>
+                    <p class="display-5">{{p.tag_line}}</p>
+                </div>
+            </div>
+
+            <!-- {% if user.is_authenticated %}
+            {% else %}
+            {% endif %} -->
+
+            {% if user.is_authenticated %}
+              <div class="row justify-content-center">
+                <div class="col-md-2 update mt-5">
+                  <div class="text-center"><a href="/update/{{p.id}}" type="button" class="button">Update</a></div>
+                </div>
+              </div>
+            {% else %}
+            {% endif %}
+        </div>
+    </section>
+{% endfor %}
+      <section id="about" class="about sec">
+
+        <!-- ======= About Me ======= -->
+        <div class="about-me container">
+
+          <div class="section-title">
+            <h2>Learn more about me</h2>
+          </div>
+          {% for p in portfolio %}
+          <div class="row">
+            <div class="col-lg-4" data-aos="fade-right">
+              <img src="{{p.image.url}}" class="img-fluid" alt="">
+            </div>
+            <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+              <p>{{p.about}}</p>
+              {% endfor %}
+
+              <div class="section-title">
+                <h6>Programming Languages I've worked on:</h6>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <ul>
+                    {% for lang in language %}
+                      {% if user.is_authenticated %}
+                        <li><i class="bi bi-chevron-right"></i> <strong>{{lang.language}}</strong>
+                          <span style="float: right;"><a href="/deleteLanguage/{{lang.id}}" class="button pr-2"><i class='bx bx-trash'></i></a></span>
+                        </li>
+                      {% else %}
+                        <li><i class="bi bi-chevron-right"></i> <strong>{{lang.language}}</strong></li>
+                      {% endif %}
+                    {% endfor %}
+
+                    {% if user.is_authenticated %}
+                    <div class="text-center update">
+                      <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#lang">Add Language</button>
+            
+                      
+                      <div class="modal fade form-modal" id="lang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add Language</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                  {{lang_form.as_p}}
+                                </div>
+                                <div class="text-center"><button type="submit" class="button mt-3">Save</button></div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div><!-- End About Me -->
+
+      </section><!-- End About Section -->
+      <!-- ======= Resume Section ======= -->
+      <section id="resume" class="resume sec">
+        <div class="container">
+    {% for p in portfolio %}
+          <div class="section-title">
+            <h2>Check out my Resume</h2>
+          </div>
+    
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="resume-title">Sumary</h3>
+              <div class="resume-item pb-0">
+                <h4>{{p.name}}</h4>
+                <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
+                <p>
+                <ul>
+                  <li>{{p.address}}, {{p.city}}</li>
+                  <li>(123) 456-7891</li>
+                  <li>{{p.email}}</li>
+                </ul>
+                </p>
+              </div>
+    {% endfor %}
+              <h3 class="resume-title">Education</h3>
+              {% for educ in education %}
+              <div class="resume-item">
+                <h4>{{educ.course}}</h4>
+                  <h5>{{educ.start_year}} - {{educ.end_year}}</h5>
+                  <p><em>{{educ.school}}, {{educ.city}}</em></p>
+
+                {% if user.is_authenticated %}
+                  <a href="/deleteEducation/{{educ.id}}" class="button pr-2"><i class='bx bx-trash'></i></a><span><a href="/UpdateEducation/{{educ.id}}" class="button"><i class='bx bx-edit-alt'></i></a></span>
+                {% endif %}
+              </div>
+              {% endfor %}
+
+              {% if user.is_authenticated %}
+              <div class="text-center update">
+                <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#educ">Add Education</button>
+      
+      
+                <div class="modal fade form-modal" id="educ" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Education</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="" method="POST">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            {{educ_form.course}}
+                          </div>
+                          <div class="form-group">
+                            {{educ_form.start_year}}
+                          </div>
+                          <div class="form-group">
+                            {{educ_form.end_year}}
+                          </div>
+                          <div class="form-group">
+                            {{educ_form.school}}
+                          </div>
+                          <div class="form-group">
+                            {{educ_form.city}}
+                          </div>
+                          <div class="text-center"><button type="submit" class="button mt-3">Save</button></div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+
+              
+              <!-- <div class="resume-item">
+                <h4>Soft Skills</h4>
+                <p>
+                <ul>
+                  {% for soft in soft_skill %}
+                    {% if user.is_authenticated %}
+                      <li>{{soft.skill}}<span style="float: right;"><a href="#" class="button pr-2"><i class='bx bx-trash'></i></a><span><a href="#" class="button"><i class='bx bx-edit-alt'></i></a></span></span></li>
+                    {% else %}
+                      <li>{{soft.skill}}</li>
+                    {% endif %}
+                  {% endfor %}
+
+
+                </ul>
+                  {% if user.is_authenticated %}
+                  <div class="text-center update">
+                    <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#soft">Add Soft</button>
+          
+          
+                    <div class="modal fade form-modal" id="soft" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Education</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <form action="" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                {{soft_form.as_p}}
+                              </div>
+                              <div class="text-center"><button type="submit" class="button mt-3">Save</button></div>
+                            </form>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+
+                </p>
+              </div> -->
+            </div>
+
+            <div class="col-lg-6">
+              <h3 class="resume-title">Skills</h3>
+              <div class="resume-item">
+                <h4>Technical Skills</h4>
+                <p>
+                <ul>
+                  {% for tech in tech_skill %}
+                  
+                    {% if user.is_authenticated %}
+                      <li>{{tech.skill}}<span style="float: right;"><a href="/deleteSkill/{{tech.id}}" class="button pr-2"><i class='bx bx-trash'></i></a></span></li>
+                    {% else %}
+                      <li>{{tech.skill}}</li>
+                    {% endif %}
+                  {% endfor %}
+
+                  {% if user.is_authenticated %}
+                  <div class="text-center update">
+                    <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Technical Skill</button>
+          
+                    <div class="modal fade form-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                           
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <form action="" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                {{tech_form.as_p}}
+                              </div>
+                              <div class="text-center"><button type="submit" class="button mt-3">Save</button></div>
+                            </form>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                </ul>
+                </p>
+              </div>
+              <h3 class="resume-title">Experience</h3>
+              {% for exp in experience %}
+              <div class="resume-item">
+                <h4>{{exp.position}}</h4>
+                <h5>{{exp.start_year}} - {{exp.end_year}}</h5>
+                <p><em>{{exp.company}}</em></p>
+                <p>
+                <ul>
+                  <li>{{exp.description}}</li>
+                </ul>
+                </p>
+                {% if user.is_authenticated %}
+                  <a href="/deleteExperience/{{exp.id}}" class="button pr-2"><i class='bx bx-trash'></i></a><span><a href="/UpdateExperience/{{exp.id}}" class="button"><i class='bx bx-edit-alt'></i></a></span>
+                {% endif %}
+              </div>
+              {% endfor %}
+              {% if user.is_authenticated %}
+                  <div class="text-center update">
+                    <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#exp">Add Experience</button>
+          
+                    
+                    <div class="modal fade form-modal" id="exp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <!-- <h5 class="modal-title" id="exampleModalLabel">Add Soft Skill</h5> -->
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="" method="POST">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                {{exp_form.as_p}}
+                              </div>
+                              <div class="text-center"><button type="submit" class="button mt-3">Save</button></div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+            </div>
+          </div>
+    
+        </div>
+      </section><!-- End Resume Section -->
+      <!-- ======= Portfolio Section ======= -->
+  <section id="projects" class="portfolio">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>My Projects</h2>
+      </div>
+
+      <div class="row portfolio-container justify-content-around">
+        {% for i in project %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+          <div class="portfolio-wrap">
+            <img src="{{i.image.url}}" class="img-fluid" alt="">
+            <div class="portfolio-info">
+              <h4>{{i.name}}</h4>
+              <div class="portfolio-links">
+                {% if user.is_authenticated %}
+                <a href="/deleteProject/{{i.id}}"  title="Delete"><i class="bx bx-trash"></i></a>
+                {% endif %}
+                <a href="/img/{{i.id}}" data-gallery="portfolioDetailsGallery" data-glightbox="type: external" class="portfolio-details-lightbox" title="Project Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section><!-- End Portfolio Section -->
+    <!-- certificates -->
+  
+    <section id="contact" class="contact" style="min-height: 100%;">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact Me</h2>
+      </div>
+
+      <div class="row justify-content-center">
+ 
+        {% if user.is_authenticated%}
+        
+        <div class="col-lg-10">
+          <table class="table table-striped table-dark">
+            <tbody>
+              {% for mess in message %}
+              <tr>
+                <td>
+
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#message" style="text-decoration: none; color:white;">{{mess.name}}</a>
+      
+      
+                <div class="modal fade form-modal" id="message" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <!-- <h5 class="modal-title" id="exampleModalLabel">Add Education</h5> -->
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Name: {{mess.name}}</p>
+                        <p>Subject: <em>{{mess.subject}}</em></p>
+                        <p>Message:</p>
+                        <p>{{mess.message}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                </th>
+                <td>{{mess.subject}}</td>
+                <td style="text-align: end;">{{ mess.Date}}</td>
+                <td style="text-align: end;"><a href="/deleteMessage/{{mess.id}}" class="button pr-2"><i class='bx bx-trash' style="font-size: 18px; color: #7a7979;" ></i></a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        
+        {% else %}
+
+{% for p in portfolio %}        
+        <div class="col-lg-6 mt-3">
+          <div class="info-box ">
+            <i class="bx bx-map"></i>
+            <h3>My Address</h3>
+            <p>{{p.address}}, {{p.city}}</p>
+          </div>
+
+          <div class="info-box mt-3">
+            <i class="bx bx-share-alt"></i>
+            <h3>Social Profiles</h3>
+            <div class="social-links">
+              <a href="{{p.twitter}}" class="twitter"><i class="bi bi-twitter"></i></a>
+              <a href="{{p.facebook}}" class="facebook"><i class="bi bi-facebook"></i></a>
+              <a href="{{p.instagram}}" class="instagram"><i class="bi bi-instagram"></i></a>
+              <a href="{{p.github}}" class="linkedin"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+
+          <div class="info-box mt-3">
+            <i class="bx bx-envelope"></i>
+            <h3>Email Me</h3>
+            <p>{{p.email}}</p>
+          </div>
+
+          <div class="info-box mt-3">
+            <i class="bx bx-phone-call"></i>
+            <h3>Contact Number</h3>
+            <p>{{p.contact}}</p>
+          </div>
+        </div>
+{% endfor %}
+        <div class="col-lg-6">
+          <form action="" method="POST" class="php-email-form mt-4">
+            {% csrf_token %}
+            <div class="form-group">
+               {{contact_form.name}}
+            </div>
+            <div class="form-group mt-3">
+              {{contact_form.email}}
+            </div>
+         
+          <div class="form-group mt-3">
+            {{contact_form.subject}}
+          </div>
+          <div class="form-group mt-3">
+            {{contact_form.message}}
+          </div>
+          <div class="my-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your message has been sent. Thank you!</div>
+          </div>
+          <div class="text-center"><button type="submit">Send Message</button></div>
+        </form>
+        </div>
+        {% endif %}
+      </div>
+
+      </div>
+      </div>
+      
+    </section>
+
+{% endblock content %}
