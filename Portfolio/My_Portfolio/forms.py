@@ -84,9 +84,11 @@ class LangForm(forms.ModelForm):
         fields = '__all__'
         labels = {
             'language': '',
+            'level': '',
         }
         widgets = {
                 'language': forms.TextInput(attrs = {'class' : 'form-control mt-2', 'placeholder':'Skill'}),
+                'level': forms.NumberInput(attrs = {'class' : 'form-control mt-2', 'placeholder':'Level'}),
             }
 
 class ProfileForm(forms.ModelForm):

@@ -13,4 +13,5 @@ urlpatterns = [
     path('deleteMessage/<int:id>', views.deleteMessage, name = "delete-message"),
     path('UpdateEducation/<int:id>', views.UpdateEducation, name = "update-education"),
     path('UpdateExperience/<int:id>', views.UpdateExperience, name = "update-experience"),
+    path('UpdateLanguage/<int:id>', views.UpdateLanguage, name = "update-language"),
 ]

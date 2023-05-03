@@ -152,3 +152,16 @@ def UpdateExperience(request, id):
         'exp_form':exp_form,
     }
     return render(request, 'experience.html', context)
+
+def UpdateLanguage(request, id):
+    lang = Languages.objects.get(id=id)
+    lang_form = LangForm(instance=lang)
+    if request.method == 'POST':
+        lang_form = LangForm(request.POST, instance=lang)
+        if lang_form.is_valid():
+            lang_form.save()
+        return redirect('index')
+    context = {
+        'lang_form':lang_form,
+    }
+    return render(request, 'language.html', context)

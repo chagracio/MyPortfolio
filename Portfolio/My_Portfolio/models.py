@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 class Certificates(models.Model):
     cert = models.ImageField(upload_to = 'certificates/', null = True)
@@ -17,6 +18,7 @@ class Education(models.Model):
 
 class Languages(models.Model):
     language = models.CharField(max_length = 50, null = True)
+    level = models.IntegerField(null=True, blank=True)
 
 class Technical_Skills(models.Model):
     skill = models.CharField(max_length = 100, null = True)
@@ -64,10 +66,10 @@ class Contact(models.Model):
     email = models.EmailField()
     message = models.TextField()
     subject = models.CharField(max_length = 100, null = True, blank = True)
-    date = models.DateTimeField(auto_now_add=True, null = True, blank = True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
-    @property
-    def Date(self):
-        date = self.date.strftime("%B %m, %Y")
-        return date
+    # @property
+    # def Date(self):
+    #     date = self.date.strftime("%B %m, %Y")
+    #     return date
 

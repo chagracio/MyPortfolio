@@ -35,14 +35,19 @@
               <!-- <li class="nav-item list">
                 <a class="nav-link" href="#certificates">Certificates</a>
               </li> -->
-              <li class="nav-item list">
-                <a class="nav-link" href="#contact">Contact</a>
-              </li>
+              
               {% if user.is_authenticated %}
+              <li class="nav-item list">
+                <a class="nav-link" href="#contact">Messages</a>
+              </li>
+
                 <li class="nav-item list">
                   <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                 </li>
               {% else %}
+              <li class="nav-item list">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
               {% endif %}
               
             </ul>
@@ -83,7 +88,7 @@
         <div class="about-me container">
 
           <div class="section-title">
-            <h2>Learn more about me</h2>
+            <h2>About Me</h2>
           </div>
           {% for p in portfolio %}
           <div class="row">
@@ -93,34 +98,35 @@
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
               <p>{{p.about}}</p>
               {% endfor %}
-
-              <div class="section-title">
-                <h6>Programming Languages I've worked on:</h6>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12">
-                  <ul>
-                    {% for lang in language %}
-                      {% if user.is_authenticated %}
-                        <li><i class="bi bi-chevron-right"></i> <strong>{{lang.language}}</strong>
-                          <span style="float: right;"><a href="/deleteLanguage/{{lang.id}}" class="button pr-2"><i class='bx bx-trash'></i></a></span>
-                        </li>
-                      {% else %}
-                        <li><i class="bi bi-chevron-right"></i> <strong>{{lang.language}}</strong></li>
-                      {% endif %}
-                    {% endfor %}
-
+<div class="container" style="background-color: transparent;">
+            <div class="row justify-content-center">
+              <h6 style="color: rgb(0, 255, 98); font-weight: bold;">Skills:</h6>
+              {% for lang in language %}
+                <div class="col-md-6">
+                  
                     {% if user.is_authenticated %}
+                      <strong class="progress-title" style="color: white;">{{lang.language}}</strong><span style="float: right;"><a href="/deleteLanguage/{{lang.id}}" class="button pr-2"><i class='bx bx-trash'></i></a><span style="float: right;"><a href="/UpdateLanguage/{{lang.id}}" class="button pr-2"><i class='bx bx-edit-alt'></i></a></span></span>
+                    {% else %}
+                    <strong class="progress-title" style="color: white;">{{lang.language}}</strong>
+                    {% endif %}
+                      <div class="progress">
+                        <div class="progress-bar" style="width:{{lang.level}}%;">
+                            <div class="progress-value">{{lang.level}}%</div>
+                        </div>
+                    </div>
+                    
+                </div>
+                {% endfor %}
+                {% if user.is_authenticated %}
                     <div class="text-center update">
-                      <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#lang">Add Language</button>
+                      <button class="button mt-3" data-bs-toggle="modal" data-bs-target="#lang">Add Skill</button>
             
                       
                       <div class="modal fade form-modal" id="lang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Add Language</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Add Skill</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -136,12 +142,14 @@
                         </div>
                       </div>
                     </div>
-                    {% endif %}
-                  </ul>
-                </div>
-              </div>
+                      {% endif %}
             </div>
+        </div>
+            </div>
+
+            
           </div>
+          
         </div>
 
         </div><!-- End About Me -->
@@ -152,7 +160,7 @@
         <div class="container">
     {% for p in portfolio %}
           <div class="section-title">
-            <h2>Check out my Resume</h2>
+            <h2>My Resume</h2>
           </div>
     
           <div class="row">
@@ -160,11 +168,11 @@
               <h3 class="resume-title">Sumary</h3>
               <div class="resume-item pb-0">
                 <h4>{{p.name}}</h4>
-                <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing and developing user-centered digital/print marketing material from initial concept to final, polished deliverable.</em></p>
+                <p><em>{{p.statement}}</em></p>
                 <p>
                 <ul>
                   <li>{{p.address}}, {{p.city}}</li>
-                  <li>(123) 456-7891</li>
+                  <li>{{p.contact}}</li>
                   <li>{{p.email}}</li>
                 </ul>
                 </p>
@@ -271,7 +279,7 @@
             </div>
 
             <div class="col-lg-6">
-              <h3 class="resume-title">Skills</h3>
+              <!-- <h3 class="resume-title">Skills</h3>
               <div class="resume-item">
                 <h4>Technical Skills</h4>
                 <p>
@@ -314,7 +322,8 @@
                   {% endif %}
                 </ul>
                 </p>
-              </div>
+              </div> -->
+
               <h3 class="resume-title">Experience</h3>
               {% for exp in experience %}
               <div class="resume-item">
@@ -340,7 +349,7 @@
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <!-- <h5 class="modal-title" id="exampleModalLabel">Add Soft Skill</h5> -->
+                            <h5 class="modal-title" id="exampleModalLabel">Add Experience</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                           </div>
                           <div class="modal-body">
@@ -410,7 +419,7 @@
               <tr>
                 <td>
 
-                  <a href="#" data-bs-toggle="modal" data-bs-target="#message" style="text-decoration: none; color:white;">{{mess.name}}</a>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#message" >{{mess.name}}</a>
       
       
                 <div class="modal fade form-modal" id="message" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -422,6 +431,7 @@
                       </div>
                       <div class="modal-body">
                         <p>Name: {{mess.name}}</p>
+                        <p>Email: {{mess.email}}</p>
                         <p>Subject: <em>{{mess.subject}}</em></p>
                         <p>Message:</p>
                         <p>{{mess.message}}</p>
@@ -432,7 +442,7 @@
 
                 </th>
                 <td>{{mess.subject}}</td>
-                <td style="text-align: end;">{{ mess.Date}}</td>
+                <td style="text-align: end;">{{ mess.date}}</td>
                 <td style="text-align: end;"><a href="/deleteMessage/{{mess.id}}" class="button pr-2"><i class='bx bx-trash' style="font-size: 18px; color: #7a7979;" ></i></a></td>
               </tr>
               {% endfor %}
@@ -503,7 +513,16 @@
 
       </div>
       </div>
-      
     </section>
 
 {% endblock content %}
+
+<script>
+  gsap.from(".progress .progress-bar", {
+    scrollTrigger: ".progress",
+    left:0,
+    ease:Power2.easeInOut,
+    duration: 3,
+    stagger: 0.1
+  });
+</script>

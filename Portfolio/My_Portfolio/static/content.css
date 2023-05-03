@@ -929,3 +929,61 @@ animation: blink-bg 3s infinite;
   padding-top: 20px;
   padding-bottom: 20px;
 }
+.progress{
+  height: 17px;
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 50px;
+  box-shadow: none;
+  padding: 2px;
+  margin-bottom: 20px;
+  overflow: visible;
+}
+.progress .progress-bar{
+  box-shadow: none;
+  position: relative;
+  border-radius: 20px;
+  background: -webkit-linear-gradient(left,rgb(0, 213, 255)0%, rgb(54, 0, 248)  100%);
+  animation: animate-positive 2s;
+}
+.progress .progress-title{
+  font-size: 10px;
+  /* font-weight: 700; */
+  /* color: #000000;
+  text-transform: uppercase;
+  margin: 0;
+  position: absolute;
+  top: 8px;
+  left: 5px; */
+}
+.progress .progress-value{
+  width: 20px;
+  height: 12px;
+  line-height: 15px;
+  border-radius: 50px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  font-size: 10px;
+  font-weight: bolder;
+  color: #ffffff;
+  position: absolute;
+  top: -2px;
+  right: 8px;
+}
+@-webkit-keyframes animate-positive{
+  0% { width: 0; }
+}
+@keyframes animate-positive{
+  0% { width: 0; }
+}
+
+.contact table td a{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact table td a:hover{
+  background: -webkit-linear-gradient(rgb(0, 213, 255), rgb(0, 250, 154));
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+text-decoration: none;
+}
